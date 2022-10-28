@@ -9,11 +9,9 @@ export default function Syracuse({navigation}) {
     const [stoppingTime, setStoppingTime] = useState('Choisir un nombre')
 
     const syracuseSequence = (e,count) => {
-        count += 1
-        if (e%2 == 0) return syracuseSequence(e/2, count)
-        if (!e%2 == 0 && e != 1) return syracuseSequence(3*e+1, count)
-        if (e == 1)
-        return count-1
+        if (e%2 == 0) return syracuseSequence(e/2, count+1)
+        if (!e%2 == 0 && e != 1) return syracuseSequence(3*e+1, count+1)
+        if (e == 1) return count
     }
 
     const calcSyracuse = (e) => {

@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='Syracuse'>
+        <Stack.Navigator initialRouteName='Weather'>
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Weather' component={Weather} />
             <Stack.Screen name='RomanConverter' component={RomanConverter} />
