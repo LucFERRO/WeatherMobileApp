@@ -5,7 +5,7 @@ import { style } from '../assets/style'
 
 export default function Navbar({navigation, currentScreen}) {
 
-    const screenList = ['Home', 'Weather', 'Preview', 'OldHome' ,'RomanConverter']
+    const screenList = ['Home', 'Weather', 'Preview', 'OldHome' ,'RomanConverter', 'Syracuse']
 
     return (
         <View>

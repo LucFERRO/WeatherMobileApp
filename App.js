@@ -16,6 +16,7 @@ import Home from './components/Home'
 import Preview from './components/Preview'
 import RomanConverter from './components/RomanConverter';
 import Navbar from './components/Navbar'
+import Syracuse from './components/Syracuse'
 import OldHome from './components/OldHome'
 import Weather from './components/Weather'
 
@@ -25,10 +26,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='Weather'>
+        <Stack.Navigator initialRouteName='Syracuse'>
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Weather' component={Weather} />
             <Stack.Screen name='RomanConverter' component={RomanConverter} />
+            <Stack.Screen name='Syracuse' component={Syracuse} />
             <Stack.Screen name='Preview' component={Preview} />
             <Stack.Screen name='OldHome' component={OldHome} />
         </Stack.Navigator>
