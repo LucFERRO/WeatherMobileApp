@@ -1,14 +1,21 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Image, Text, View, ScrollView , TextInput, Button } from 'react-native';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { style } from '../assets/style'
 import Navbar from './Navbar'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Fontisto from 'react-native-vector-icons/Fontisto'
+import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default function Weather({navigation}) {
+
+    const [isPreview, setIsPreview] = useState(false)
+
+    useEffect( () => console.log(isPreview), [isPreview])
 
     const response = {
         "cod": "200",
@@ -1533,26 +1540,46 @@ export default function Weather({navigation}) {
   return (
     <ScrollView style={styleWeather.back}>
         <View style={styleWeather.main}>
-            <Text style={styleWeather.cityName}>
-                {`${response.city.name}`}
-            </Text>
-            <Image source={{ uri: `http://openweathermap.org/img/wn/${response.list[0].weather[0].icon}@4x.png` }} style={styleWeather.image} />
-            <View>
-                <View style={styleWeather.mainTempContainer}>
-                    <Text style={styleWeather.mainTemp}>
-                        {`${Math.round(response.list[0].main.temp)}`}
-                    </Text>
-                    <Text style={styleWeather.mainTempDeg}>°</Text>
+            { !isPreview ? 
+            <>
+                <View style={styleWeather.header}>
+                    <View style={styleWeather.headerLeftButton}>
+                        <MaterialCommunityIcons name='dots-square' style={styleWeather.headerIconLeft} />
+                    </View>
+                    <Text style={styleWeather.cityName}>
+                        {`${response.city.name}`}
+                    </Text> 
+                    <Entypo name='dots-three-vertical' style={styleWeather.headerIconRight} />
                 </View>
-                <Text style={styleWeather.mainWeather}>
-                    {`${response.list[0].weather[0].description}`}
-                </Text>
-            </View>
-            <View>
-                <Text style={styleWeather.mainDt}>
-                    {new Date(response.list[0].dt_txt).toLocaleTimeString("fr-FR", options1)}
-                </Text>
-            </View>
+                <Image source={{ uri: `http://openweathermap.org/img/wn/${response.list[0].weather[0].icon}@4x.png` }} style={styleWeather.image} />
+                <View>
+                    <View style={styleWeather.mainTempContainer}>
+                        <Text style={styleWeather.mainTemp}>
+                            {`${Math.round(response.list[0].main.temp)}`}
+                        </Text>
+                        <Text style={styleWeather.mainTempDeg}>°</Text>
+                    </View>
+                    <Text style={styleWeather.mainWeather}>
+                        {`${response.list[0].weather[0].description}`}
+                    </Text>
+                </View>
+                <View>
+                    <Text style={styleWeather.mainDt}>
+                        {new Date(response.list[0].dt_txt).toLocaleTimeString("fr-FR", options1)}
+                    </Text>
+                </View>
+            </>
+            : <></>}
+            { isPreview ?
+            <>
+                <View style={styleWeather.header}>
+                    <View style={styleWeather.headerLeftButton} ><FontAwesome name='chevron-left' style={styleWeather.headerIconLeft} onPress={() => setIsPreview(false)} /></View>
+                    <Text style={styleWeather.cityName}>
+                        {`${response.city.name}`}
+                    </Text> 
+                    <Entypo name='dots-three-vertical' style={styleWeather.headerIconRight} />
+                </View>
+            </> : <></>}
             <View style={styleWeather.details}>
                 <View style={styleWeather.detailsChild}>
                     <Feather style={styleWeather.detailsIcon} name="wind"/>
@@ -1587,7 +1614,7 @@ export default function Weather({navigation}) {
         <View style={styleWeather.container}>
             <View style={styleWeather.footerHeader}>
                 <Text style={styleWeather.footerHeaderToday}>Aujourd'hui</Text>
-                <Text style={styleWeather.footerHeaderMore}>Plus ></Text>
+                <Text style={styleWeather.footerHeaderMore} onPress={() => setIsPreview(true)}>Plus <FontAwesome style={styleWeather.footerHeaderIcon} name='chevron-right'/></Text>
             </View>
             <View style={styleWeather.footer}>
                 <View style={styleWeather.footerElement}>
@@ -1618,15 +1645,6 @@ export default function Weather({navigation}) {
                 </View>
             </View>
         </View>
-
-        {/* <View style={styleWeather.oldhome}>
-
-                <Text>{`${response.city.population} pauvres âmes vivent dans ce trou.`}</Text>
-                <Text>{`Ici il fait ${response.list[0].main.temp}°C.`}</Text>
-                <Text>{`Températures entre ${response.list[0].main.temp_min}°C et ${response.list[0].main.temp_max}°C`}</Text>
-                <Text>{`Humidité: ${response.list[0].main.humidity}%`}</Text>
-                <StatusBar style="auto" />
-        </View> */}
     </ScrollView>
   )
 }
@@ -1641,44 +1659,30 @@ const styleWeather = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    footerHeader: {
-        paddingHorizontal: 40,
-        marginTop: 15,
+    header: {
         flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    footerHeaderToday: {
-        color: '#fff',
-        fontSize: 14
-    },
-    footerHeaderMore: {
-        color: '#b3dbe6',
-        fontSize: 11
-    },
-    footer: {
-        flexDirection: 'row',
-        marginTop: 25
-    },
-    footerElement: {
-        width: 60,
-        marginHorizontal: 10,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingHorizontal: 15
+    },
+    headerLeftButton: {
         borderWidth: 1,
-        borderColor: 'rgba(249, 249, 249, 0.2)',
-        borderRadius: 20,
+        borderRadius: 50,
+        borderColor: '#b3dbe6',
+        width: 30,
+        aspectRatio: '1/1',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    footerElementTemp: {
+    headerIconLeft: {
         color: '#fff',
+        fontSize: 15,
+        padding: 5,
     },
-    footerElementHour: {
-        color: '#fff'
-    },
-    footerElementImage: {
-        height: 50,
-        width: 50
+    headerIconRight: {
+        color: '#fff',
+        fontSize: 15
     },
     main: {
         backgroundColor: '#34c3eb',
@@ -1713,7 +1717,7 @@ const styleWeather = StyleSheet.create({
     },  
     cityName: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: 20,
     },
     image: {
         height: 200,
@@ -1744,6 +1748,49 @@ const styleWeather = StyleSheet.create({
     detailsText: {
         fontSize: 12,
         color: 'rgba(249, 249, 249, 0.7)'
+    },
+    footerHeader: {
+        paddingHorizontal: 40,
+        marginTop: 15,
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    footerHeaderToday: {
+        color: '#fff',
+        fontSize: 14
+    },
+    footerHeaderMore: {
+        color: '#b3dbe6',
+        fontSize: 11
+    },
+    footerHeaderIcon: {
+        color: '#b3dbe6',
+        fontWeight: '100'
+    },
+    footer: {
+        flexDirection: 'row',
+        marginTop: 25
+    },
+    footerElement: {
+        width: 60,
+        marginHorizontal: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgba(249, 249, 249, 0.2)',
+        borderRadius: 20,
+    },
+    footerElementTemp: {
+        color: '#fff',
+    },
+    footerElementHour: {
+        color: '#fff'
+    },
+    footerElementImage: {
+        height: 50,
+        width: 50
     },
     oldhome: {
       flex: 1,
