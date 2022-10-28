@@ -1671,7 +1671,7 @@ const styleWeather = StyleSheet.create({
         borderRadius: 50,
         borderColor: '#b3dbe6',
         width: 30,
-        aspectRatio: '1/1',
+        aspectRatio: 1/1,
         alignItems: 'center',
         justifyContent: 'center',
     },
