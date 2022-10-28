@@ -11,13 +11,24 @@ export default function Syracuse({navigation}) {
     const syracuseSequence = (e,count) => {
         if (e%2 == 0) return syracuseSequence(e/2, count+1)
         if (!e%2 == 0 && e != 1) return syracuseSequence(3*e+1, count+1)
+        // if (e == 1 || e == -1 || e == -5 || e == -17) return count
         if (e == 1) return count
     }
 
     const calcSyracuse = (e) => {
+        if (e == 0) return setStoppingTime('Choisir un nombre non nul')
         if (!e) return setStoppingTime('Choisir un nombre')
         setStoppingTime(syracuseSequence(e,0))
     }
+
+    // const test = (e,i) => {
+    //     console.log(e)
+    //     if (e%2 == 0) return test(e/2, i+1)
+    //     if (!e%2 == 0 && e != 1) return test(3*e+1, i+1)
+    //     if (e == 1 || e == -1 || e == -5 || e == -17) return i
+    // }
+
+    // console.log(test(-5,0))
 
   return (
     <>
