@@ -24,23 +24,36 @@ require("dayjs/locale/fr");
 
 export default function NextDays({ formatedData }) {
     if (!formatedData) return;
+    const minTempOfGivenDay = (day) => {
+        let min_temp = 1000
+        day.forEach( timeRange => {
+            if (timeRange.main.temp < min_temp) min_temp = timeRange.main.temp
+        })
+        return min_temp
+    }
+
     return (
         <View>
             {formatedData.map((day, i) => {
-                if (i == 0) return;
+                if (i == 0 || i == 1) return;
+                if (!day.data[4]) return;
+                // console.log(day)
                 return (
-                    <View key={i} style={styleInCompo1.dayContainer}>
-                        <Text style={styleInCompo1.day}>{day.day}</Text>
-                        <View>
+                    <View key={i} style={styleNextDays.dayContainer}>
+                        <Text style={styleNextDays.day}>{day.day.slice(0,3)}</Text>
+                        <View style={styleNextDays.weather}>
                             <Image
                                 source={{
                                     uri: `http://openweathermap.org/img/wn/${day.data[4].weather[0].icon}@4x.png`,
                                 }}
-                                style={styleInCompo1.icon}
+                                style={styleNextDays.icon}
                             />
-                            <Text>{day.data[4].weather.description}</Text>
+                            <Text style={styleNextDays.iconDescription}>{day.data[4].weather[0].description}</Text>
                         </View>
-                        <Text></Text>
+                        <View style={styleNextDays.tempContainer}>
+                            <Text style={styleNextDays.temp}>{`${Math.round(day.data[4].main.temp)}°`}</Text>
+                            <Text style={styleNextDays.minTemp}>{`${Math.round(minTempOfGivenDay(day.data))}°`}</Text>
+                        </View>
                     </View>
                 );
             })}
@@ -48,18 +61,43 @@ export default function NextDays({ formatedData }) {
     );
 }
 
-const styleInCompo1 = StyleSheet.create({
+const styleNextDays = StyleSheet.create({
     dayContainer: {
-        justifyContent: "center",
+        justifyContent: 'space-between',
         alignItems: "center",
+        flexDirection: "row"
     },
     day: {
         color: "#b3dbe6",
         fontSize: 20,
         textTransform: "capitalize",
     },
-    icon: {
-        width: 200,
-        backgroundColor: "#ff0000",
+    weather: {
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
     },
+    icon: {
+        height: 50,
+        width: 50,
+    },
+    iconDescription: {
+        color: "#b3dbe6",
+        fontSize: 20,
+        textTransform: "capitalize",
+    },
+    tempContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        width: 100
+    },
+    temp: {
+        color: "#fff",
+        fontSize: 20,
+    },
+    minTemp: {
+        color: "#b3dbe6",
+        fontSize: 15,
+    }
 });

@@ -6,6 +6,7 @@ import { style } from "../assets/style";
 import Navbar from "./Navbar";
 import NextDays from "./NextDays";
 import WeatherDetails from "./WeatherDetails";
+import SelectedWeather from "./SelectedWeather";
 
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -22,6 +23,17 @@ export default function Weather({ navigation }) {
     const [weatherData, setWeatherData] = useState();
     const [formatedWeatherData, setFormatedWeatherData] = useState();
     const [mainWeather, setMainWeather] = useState({
+        dt: null,
+        temp: null,
+        temp_min: null,
+        temp_max: null,
+        humidity: null,
+        description: null,
+        icon: null,
+        wind: null,
+        rain: null,
+    });
+    const [tommorowWeather, setTommorowWeather] = useState({
         dt: null,
         temp: null,
         temp_min: null,
@@ -1555,7 +1567,7 @@ export default function Weather({ navigation }) {
             };
 
             setMainWeather({
-                name: "Saint-Martin-Boulogne",
+                name: res.city.name,
                 dt: res.list[0].dt,
                 temp: res.list[0].main.temp,
                 temp_min: res.list[0].main.temp_min,
@@ -1590,6 +1602,18 @@ export default function Weather({ navigation }) {
                     };
                 });
             setFormatedWeatherData(newForecastData);
+            setTommorowWeather({
+                name: res.city.name,
+                dt: newForecastData[1].data[4].dt,
+                temp: newForecastData[1].data[4].main.temp,
+                temp_min: newForecastData[1].data[4].main.temp_min,
+                temp_max: newForecastData[1].data[4].main.temp_max,
+                humidity: newForecastData[1].data[4].main.humidity,
+                description: newForecastData[1].data[4].weather[0].description,
+                icon: newForecastData[1].data[4].weather[0].icon,
+                wind: newForecastData[1].data[4].wind.speed,
+                rain: newForecastData[1].data[4].rain ? newForecastData[1].data[4].rain * 100 + " %" : "0 %",
+            });
         };
         fetchAndSetData();
     }, []);
@@ -1602,112 +1626,13 @@ export default function Weather({ navigation }) {
     return (
         <ScrollView style={styleWeather.back}>
             <View style={styleWeather.main}>
-                {!isPreview ? (
-                    <>
-                        <View style={styleWeather.header}>
-                            <View style={styleWeather.headerLeftButton}>
-                                <MaterialCommunityIcons
-                                    name="dots-square"
-                                    style={styleWeather.headerIconLeft}
-                                />
-                            </View>
-                            <Text style={styleWeather.cityName}>
-                                {`${mainWeather.name}`}
-                            </Text>
-                            <Entypo
-                                name="dots-three-vertical"
-                                style={styleWeather.headerIconRight}
-                            />
-                        </View>
-                        {mainWeather.icon ? (
-                            <Image
-                                source={{
-                                    uri: `http://openweathermap.org/img/wn/${mainWeather.icon}@4x.png`,
-                                }}
-                                style={styleWeather.image}
-                            />
-                        ) : (
-                            <></>
-                        )}
+                <SelectedWeather isPreview={isPreview} setIsPreview={setIsPreview} mainWeather={mainWeather} tommorowWeather={tommorowWeather}/>
 
-                        <View>
-                            <View style={styleWeather.mainTempContainer}>
-                                <Text style={styleWeather.mainTemp}>
-                                    {`${Math.round(mainWeather.temp)}`}
-                                </Text>
-                                <Text style={styleWeather.mainTempDeg}>°</Text>
-                            </View>
-                            <Text style={styleWeather.mainWeather}>
-                                {`${mainWeather.description}`}
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={styleWeather.mainDt}>
-                                {dayjs
-                                    .unix(mainWeather.dt)
-                                    .locale("fr")
-                                    .format("DD MMMM YYYY  HH:mm")}
-                            </Text>
-                        </View>
-                    </>
-                ) : (
-                    <></>
-                )}
-
-                {isPreview ? (
-                    <>
-                        <View style={styleWeather.header}>
-                            <View style={styleWeather.headerLeftButton}>
-                                <FontAwesome
-                                    name="chevron-left"
-                                    style={styleWeather.headerIconLeft}
-                                    onPress={() => setIsPreview(false)}
-                                />
-                            </View>
-                            <Text style={styleWeather.cityName}>
-                                {`${mainWeather.name}`}
-                            </Text>
-                            <Entypo
-                                name="dots-three-vertical"
-                                style={styleWeather.headerIconRight}
-                            />
-                        </View>
-                        <View style={styleWeather.headerMoreInfo}>
-                            {mainWeather.icon ? (
-                                <Image
-                                    source={{
-                                        uri: `http://openweathermap.org/img/wn/${mainWeather.icon}@4x.png`,
-                                    }}
-                                    style={styleWeather.imageAlt}
-                                />
-                            ) : (
-                                <></>
-                            )}
-                            <View>
-                                <Text style={styleWeather.mainWeatherAltDay}>
-                                    {`Tommorrow`}
-                                </Text>
-                                <View style={styleWeather.mainTempContainerAlt}>
-                                    <Text style={styleWeather.mainTemp}>
-                                        {`${Math.round(mainWeather.temp)}`}
-                                    </Text>
-                                    <Text
-                                        style={styleWeather.mainTempAltMin}
-                                    >{`/${Math.round(
-                                        mainWeather.temp_min
-                                    )}°`}</Text>
-                                </View>
-                                <Text style={styleWeather.mainWeatherAlt}>
-                                    {`${mainWeather.description}`}
-                                </Text>
-                            </View>
-                        </View>
-                    </>
-                ) : (
-                    <></>
-                )}
-
-                <WeatherDetails weatherData={mainWeather} />
+                {!isPreview ? 
+                    <WeatherDetails weatherData={mainWeather} />
+                :
+                    <WeatherDetails weatherData={tommorowWeather} />
+                }
 
             </View>
 
@@ -1874,38 +1799,6 @@ const styleWeather = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    header: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: "100%",
-        paddingHorizontal: 15,
-    },
-    headerMoreInfo: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: "100%",
-        paddingEnd: 15,
-    },
-    headerLeftButton: {
-        borderWidth: 1,
-        borderRadius: 50,
-        borderColor: "#b3dbe6",
-        width: 30,
-        aspectRatio: 1 / 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    headerIconLeft: {
-        color: "#fff",
-        fontSize: 15,
-        padding: 5,
-    },
-    headerIconRight: {
-        color: "#fff",
-        fontSize: 15,
-    },
     main: {
         backgroundColor: "#34c3eb",
         alignItems: "center",
@@ -1913,59 +1806,6 @@ const styleWeather = StyleSheet.create({
         borderRadius: 50,
         padding: 15,
         margin: 10,
-    },
-    mainTemp: {
-        color: "#fff",
-        fontSize: 75,
-    },
-    mainTempContainer: {
-        justifyContent: "center",
-        flexDirection: "row",
-    },
-    mainWeatherAltDay: {
-        color: "#fff",
-    },
-    mainTempContainerAlt: {
-        justifyContent: "center",
-        alignItems: "baseline",
-        flexDirection: "row",
-    },
-    mainTempAltMin: {
-        fontSize: 30,
-        color: "#b3dbe6",
-    },
-    mainTempDeg: {
-        color: "#b3dbe6",
-        fontSize: 35,
-        paddingTop: 10,
-    },
-    mainWeather: {
-        color: "#fff",
-        fontSize: 30,
-        textAlign: "center",
-        textTransform: "capitalize",
-    },
-    mainWeatherAlt: {
-        color: "#b3dbe6",
-        fontSize: 15,
-        textAlign: "flex-start",
-        textTransform: "capitalize",
-    },
-    mainDt: {
-        color: "#fff",
-        textTransform: "capitalize",
-    },
-    cityName: {
-        color: "#fff",
-        fontSize: 20,
-    },
-    image: {
-        height: 200,
-        width: 200,
-    },
-    imageAlt: {
-        height: 150,
-        width: 150,
     },
     footerHeader: {
         paddingHorizontal: 40,
