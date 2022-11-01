@@ -196,7 +196,7 @@ const styleWeather = StyleSheet.create({
     mainWeatherAlt: {
         color: "#b3dbe6",
         fontSize: 15,
-        textAlign: "flex-start",
+        textAlign: 'left',
         textTransform: "capitalize",
     },
     mainDt: {
