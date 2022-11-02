@@ -12,13 +12,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Location from 'expo-location';
 import { style } from './assets/style'
 
-import Accueil from './components/Home'
+import Home from './components/Home'
 import Preview from './components/Preview'
-import ChiffresRomains from './components/RomanConverter';
+import RomanConverter from './components/RomanConverter';
 import Navbar from './components/Navbar'
 import Syracuse from './components/Syracuse'
 import OldHome from './components/OldHome'
-import Météo from './components/Weather'
+import Weather from './components/Weather'
 
 export default function App() {
 
@@ -27,12 +27,10 @@ export default function App() {
   return (
     <NavigationContainer>
         <Stack.Navigator initialRouteName='Accueil'>
-            <Stack.Screen name='Accueil' component={Accueil} />
-            <Stack.Screen name='Météo' component={Météo} />
-            <Stack.Screen name='ChiffresRomains' component={ChiffresRomains} />
+            <Stack.Screen name='Accueil' component={Home} />
+            <Stack.Screen name='Météo' component={Weather} />
+            <Stack.Screen name='ChiffresRomains' component={RomanConverter} />
             <Stack.Screen name='Syracuse' component={Syracuse} />
-            {/* <Stack.Screen name='Preview' component={Preview} />
-            <Stack.Screen name='OldHome' component={OldHome} /> */}
         </Stack.Navigator>
     </NavigationContainer>
     );

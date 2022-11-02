@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { style } from '../assets/style'
 import Navbar from './Navbar'
 
-export default function ChiffresRomains({navigation}) {
+export default function RomanConverter({navigation}) {
     const [convertResult, setConverResult] = useState("En attente d'un chiffre romain")
 
     let romanNumbers = {
@@ -47,12 +47,7 @@ export default function ChiffresRomains({navigation}) {
 
   return (
     <>
-        <Navbar navigation={navigation} currentScreen={'RomanConverter'}/>
-        {/* <View>
-            <Button title="Home" onPress={() => navigation.navigate('Home')}/>
-            <Button title="Roman Converter" onPress={() => navigation.navigate('RomanConverter')}/>
-            <Button title="Preview" onPress={() => navigation.navigate('Preview')}/>
-        </View> */}
+        <Navbar navigation={navigation} currentScreen={'ChiffresRomains'}/>
         <View style={style.container}>
             <Text>Conversion chiffres romains:</Text>
             <TextInput style={style.input} autoCapitalize= {"characters"} onChangeText={handleRomanNumberChange}/>

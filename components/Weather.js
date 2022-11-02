@@ -1657,7 +1657,6 @@ export default function Météo({ navigation }) {
                 description: res.list[0].weather[0].description,
                 icon: res.list[0].weather[0].icon,
                 wind: res.list[0].wind.speed,
-                // rain: res.list[0].rain ? res.list[0].rain['3h'] * 100 + " %" : "0 %",
                 rain: res.list[0].pop * 100 + " %",
             });
             setWeatherData(res);
@@ -1734,70 +1733,6 @@ export default function Météo({ navigation }) {
 
             </View>
 
-            {/* {!isPreview ? (
-                <View style={styleWeather.container}>
-                    <View style={styleWeather.footerHeader}>
-                        <Text style={styleWeather.footerHeaderToday}>
-                            Aujourd'hui
-                        </Text>
-                        <Text
-                            style={styleWeather.footerHeaderMore}
-                            onPress={() => setIsPreview(true)}
-                        >
-                            Plus{" "}
-                            <FontAwesome
-                                style={styleWeather.footerHeaderIcon}
-                                name="chevron-right"
-                            />
-                        </Text>
-                    </View>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        style={styleWeather.footer}
-                    >
-                        {weatherData?.list.map((element, i) => {
-                            return (
-                                <View
-                                    key={i}
-                                    style={styleWeather.footerElement}
-                                >
-                                    <Text
-                                        style={styleWeather.footerElementTemp}
-                                    >
-                                        {`${Math.round(element.main.temp)}°`}
-                                    </Text>
-                                    <Image
-                                        style={styleWeather.footerElementImage}
-                                        source={{
-                                            uri: `http://openweathermap.org/img/wn/${element.weather[0].icon}@4x.png`,
-                                        }}
-                                    />
-                                    <Text
-                                        style={styleWeather.footerElementHour}
-                                    >
-                                        {dayjs
-                                            .unix(element.dt)
-                                            .locale("fr")
-                                            .format("HH:mm")}
-                                    </Text>
-                                </View>
-                            );
-                        })}
-                    </ScrollView>
-                </View>
-            ) : (
-                <>
-                    <View style={styleWeather.container}>
-                        {formatedWeatherData?.map((day, i) => {
-                            <Text>{day.day}</Text>;
-                        })}
-                        <NextDays formatedData={formatedWeatherData} />
-                    </View>
-                </>
-            )} */}
-
-            {/* TRUC QUI BUG PLUS */}
             {!isPreview ? (
                 <ScrollView
                     horizontal

@@ -37,7 +37,6 @@ export default function NextDays({ formatedData }) {
             {formatedData.map((day, i) => {
                 if (i == 0 || i == 1) return;
                 if (!day.data[4]) return;
-                // console.log(day)
                 return (
                     <View key={i} style={styleNextDays.dayContainer}>
                         <Text style={styleNextDays.day}>{day.day.slice(0,3)}</Text>

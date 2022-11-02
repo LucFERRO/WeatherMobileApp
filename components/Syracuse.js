@@ -21,18 +21,9 @@ export default function Syracuse({navigation}) {
         setStoppingTime(syracuseSequence(e,0))
     }
 
-    // const test = (e,i) => {
-    //     console.log(e)
-    //     if (e%2 == 0) return test(e/2, i+1)
-    //     if (!e%2 == 0 && e != 1) return test(3*e+1, i+1)
-    //     if (e == 1 || e == -1 || e == -5 || e == -17) return i
-    // }
-
-    // console.log(test(-5,0))
-
   return (
     <>
-        <Navbar navigation={navigation} currentScreen={'RomanConverter'}/>
+        <Navbar navigation={navigation} currentScreen={'Syracuse'}/>
 
         <View style={style.container}>
             <Text>Départ de la suite de Syracuse:</Text>
