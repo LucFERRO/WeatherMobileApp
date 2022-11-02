@@ -83,7 +83,7 @@ const styleNextDays = StyleSheet.create({
     },
     iconDescription: {
         color: "#b3dbe6",
-        fontSize: 20,
+        fontSize: 10,
         textTransform: "capitalize",
     },
     tempContainer: {

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { style } from '../assets/style'
 import Navbar from './Navbar'
 
-export default function RomanConverter({navigation}) {
+export default function ChiffresRomains({navigation}) {
     const [convertResult, setConverResult] = useState("En attente d'un chiffre romain")
 
     let romanNumbers = {

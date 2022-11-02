@@ -20,7 +20,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function SelectedWeather({isPreview,setIsPreview,mainWeather,tommorowWeather}) {
+export default function SelectedWeather({isPreview,setIsPreview,city,mainWeather,tommorowWeather}) {
   return <>
     {!isPreview ? (
         <>
@@ -32,7 +32,7 @@ export default function SelectedWeather({isPreview,setIsPreview,mainWeather,tomm
                     />
                 </View>
                 <Text style={styleWeather.cityName}>
-                    {`${mainWeather.name}`}
+                    {`${city}`}
                 </Text>
                 <Entypo
                     name="dots-three-vertical"
@@ -85,7 +85,7 @@ export default function SelectedWeather({isPreview,setIsPreview,mainWeather,tomm
                     />
                 </View>
                 <Text style={styleWeather.cityName}>
-                    {`${tommorowWeather.name}`}
+                    {`${city}`}
                 </Text>
                 <Entypo
                     name="dots-three-vertical"
@@ -142,7 +142,7 @@ const styleWeather = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
-        paddingEnd: 15,
+        // paddingEnd: 15,
     },
     headerLeftButton: {
         borderWidth: 1,
@@ -164,7 +164,7 @@ const styleWeather = StyleSheet.create({
     },
     mainTemp: {
         color: "#fff",
-        fontSize: 75,
+        fontSize: 50,
     },
     mainTempContainer: {
         justifyContent: "center",
@@ -189,7 +189,7 @@ const styleWeather = StyleSheet.create({
     },
     mainWeather: {
         color: "#fff",
-        fontSize: 30,
+        fontSize: 20,
         textAlign: "center",
         textTransform: "capitalize",
     },
@@ -208,8 +208,8 @@ const styleWeather = StyleSheet.create({
         fontSize: 20,
     },
     image: {
-        height: 200,
-        width: 200,
+        height: 150,
+        width: 150,
     },
     imageAlt: {
         height: 150,

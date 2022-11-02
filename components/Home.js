@@ -8,7 +8,7 @@ import OldHome from './OldHome';
 import * as Location from 'expo-location';
 import { style } from '../assets/style'
 
-export default function Home({navigation}) {
+export default function Accueil({navigation}) {
     const [currentTemp, setCurrentTemp] = useState()
 
     const [location, setLocation] = useState(null);
@@ -1591,6 +1591,22 @@ export default function Home({navigation}) {
             <Button title="Roman Converter" onPress={() => navigation.navigate('RomanConverter')}/>
             <Button title="Preview" onPress={() => navigation.navigate('Preview')}/>
         </View> */}
+        <View style={styleHome.background}>
+            <Text style={styleHome.msg}>Bienvenue sur l'app météo couteau suisse</Text>
+        </View>
     </>
   );
 }
+
+const styleHome = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: "#000A18",
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    msg: {
+        color: '#fff',
+        fontSize: 15
+    },
+})
