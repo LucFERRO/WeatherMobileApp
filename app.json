@@ -2,14 +2,14 @@
   "expo": {
     "name": "canardweather",
     "slug": "canardweather",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/canardcarre.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/bg.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#34c3eb"
+      "resizeMode": "cover",
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
