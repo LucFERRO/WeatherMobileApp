@@ -5,7 +5,7 @@ import { style } from '../assets/style'
 import Navbar from './Navbar'
 
 export default function RomanConverter({navigation}) {
-    const [convertResult, setConverResult] = useState("En attente d'un chiffre romain")
+    const [convertResult, setConverResult] = useState("En attente d'un chiffre romain.")
 
     let romanNumbers = {
         I: 1,
